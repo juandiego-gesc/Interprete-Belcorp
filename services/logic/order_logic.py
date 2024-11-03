@@ -1,16 +1,11 @@
+# services/logic/order_logic.py
 from models.dto import OrderDTO
-from util import get_chat_response
+from .inventory_logic import load_inventory_data
 
-
-async def add_to_cart(order_request):
-	input_text = order_request.get("message", "")
-	# Aquí extraemos los detalles del pedido
-	# Para el demo, usaremos datos fijos
-	order_data = {
-		"productos": [
-			{"nombre": "crema hidratante", "cantidad": 5, "catalogo_numero": 123}
-		]
-	}
-	order_dto = OrderDTO(**order_data)
-	# Lógica para agregar al carrito (omitida en el demo)
-	return order_dto
+def add_to_cart(order_dto: OrderDTO):
+	# Aquí puedes simular agregar al carrito
+	print(f"Productos agregados al carrito:")
+	for item in order_dto.productos:
+		print(f"- {item.cantidad} x {item.nombre}")
+	# No es necesario actualizar el inventario en este punto
+	return True

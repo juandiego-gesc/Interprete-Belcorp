@@ -2,14 +2,14 @@ from services.logic.sale_logic import register_sale
 from services.logic.inventory_logic import get_inventory
 from services.logic.order_logic import add_to_cart
 from services.logic.exchange_logic import register_exchange
-from services.formatters.sale_formatter import format_sale_response
-from services.formatters.inventory_formatter import format_inventory_response
-from services.formatters.order_formatter import format_order_response
-from services.formatters.exchange_formatter import format_exchange_response
+from services.formatters.sale_formatter import handle_sale_message
+from services.formatters.inventory_formatter import handle_inventory_message
+from services.formatters.order_formatter import handle_order_message
+from services.formatters.exchange_formatter import handle_exchange_message
 from util import get_chat_response
 
 
-async def tool_selection(input_text):
+def tool_selection(input_text):
 	system_prompt = """Eres un asistente virtual para las consultoras de Belcorp."""
 	user_prompt = f"""
 Necesitas actuar como un recomendador de herramientas según los mensajes de las consultoras.
@@ -30,24 +30,20 @@ Tu respuesta:"""
 	return response.strip()
 
 
-async def user_input_handler(input_text):
-	tool = await tool_selection(input_text)
+def user_input_handler(input_text):
+	tool = tool_selection(input_text)
 	print(f"Herramienta seleccionada: {tool}")
 	if tool == "Sale_Service":
-		sale_dto = await register_sale({"message": input_text})
-		response_text = await format_sale_response(sale_dto)
+		response_text = handle_sale_message(input_text)
 		return response_text
 	elif tool == "Inventory_Service":
-		inventory_dto = await get_inventory()
-		response_text = await format_inventory_response(inventory_dto)
+		response_text = handle_inventory_message(input_text)
 		return response_text
 	elif tool == "Order_Service":
-		order_dto = await add_to_cart({"message": input_text})
-		response_text = await format_order_response(order_dto)
+		response_text = handle_order_message(input_text)
 		return response_text
 	elif tool == "Exchange_Service":
-		exchange_dto = await register_exchange({"message": input_text})
-		response_text = await format_exchange_response(exchange_dto)
+		response_text = handle_exchange_message(input_text)
 		return response_text
 	else:
 		response = get_chat_response("Eres un asistente virtual para las consultoras de Belcorp. responde estas "

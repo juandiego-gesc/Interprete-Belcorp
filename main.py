@@ -33,7 +33,7 @@ app.add_middleware(
 async def whatsapp_webhook(request: Request):
     data = await request.json()
     message = data.get('message', '')
-    response_text = await user_input_handler(message)
+    response_text = user_input_handler(message)
     return {"response": response_text}
 
 
@@ -47,7 +47,7 @@ async def endpoint_register_sale(sale_request: dict):
 
 @app.get("/get_inventory")
 async def endpoint_get_inventory():
-    inventory_dto = await get_inventory()
+    inventory_dto = get_inventory()
     return inventory_dto
 
 

@@ -14,9 +14,14 @@ class SaleDTO(BaseModel):
 
 
 class InventoryItemDTO(BaseModel):
+	id_producto: int
 	nombre: str
+	marca: str
 	cantidad: int
-
+	precio_compra: str
+	precio_venta: str
+	imagen: str
+	canjeable: bool
 
 class InventoryDTO(BaseModel):
 	productos: List[InventoryItemDTO]
