@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+pydantic
+openai
+google-generativeai
+
+
+langchain==0.3.1
+langchain-community==0.3.1
+langchain-core==0.3.6
+langchain-text-splitters==0.3.0
